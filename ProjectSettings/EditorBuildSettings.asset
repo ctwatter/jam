@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/ColinScene/ColinGym.unity
+    guid: e9bcff1d4fa04e44f8eb835e18013ce7
   m_configObjects: {}

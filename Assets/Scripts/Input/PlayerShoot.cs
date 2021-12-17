@@ -11,6 +11,8 @@ public class PlayerShoot : MonoBehaviour
     public GameObject startPosVisual;
     public GameObject currPosVisual;
 
+    public GameObject line;
+
     public GameObject shootTowards;
 
     Vector3 startPos;
@@ -41,12 +43,13 @@ public class PlayerShoot : MonoBehaviour
 
     private void Update()
     {
-        if(doShoot && lastShotTime + shootFrequency < Time.time && convertToWorldPoint(inputManager.currTouchPosition) != startPos)
+        currPosVisual.transform.position = convertToWorldPoint(inputManager.currTouchPosition);
+        Vector3 shootPos = convertToWorldPoint(inputManager.currTouchPosition) - startPos;
+        shootPos = shootPos.normalized * 2;
+        line.GetComponent<LineRenderer>().SetPositions(new Vector3[] { transform.position, (transform.position + shootPos) });
+        shootTowards.transform.position = transform.position + shootPos;
+        if (doShoot && lastShotTime + shootFrequency < Time.time && convertToWorldPoint(inputManager.currTouchPosition) != startPos)
         {
-            currPosVisual.transform.position = convertToWorldPoint(inputManager.currTouchPosition);
-            Vector3 shootPos = convertToWorldPoint(inputManager.currTouchPosition) - startPos;
-            shootPos = shootPos.normalized * 2;
-            shootTowards.transform.position = transform.position + shootPos;
             shootProjectile(gameManager.currentProjectile, shootPos);
             lastShotTime = Time.time;
         }
